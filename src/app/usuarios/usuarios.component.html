@@ -1,0 +1,212 @@
+<nav
+  id="navzao"
+  class="navbar navbar-light bg-primary"
+  style="border-bottom: 4px solid #0000; background-color: white !important"
+>
+  <div class="container-fluid">
+    <a style="padding: 25px" href="#" class="navbar-brand">
+      <img
+        src="/assets/logo.png"
+        width="80"
+        height="100"
+        alt=""
+        class="d-inline-block align-middle mr-2"
+      />
+      <span class="text-uppercase font-weight-bold mx-4">Cartão Consumo</span>
+    </a>
+    <div class="d-flex">
+      <button
+        title="Novo Usuário"
+        class="btn btn-success mx-4"
+        data-bs-toggle="modal"
+        data-bs-target="#novo"
+      >
+        <i class="fa-solid fa-circle-plus"></i>
+      </button>
+      <button
+        id="printPageButton"
+        title="Voltar"
+        class="btn btn-light mx-2"
+        (click)="voltarLogin()"
+      >
+        <i class="fa-solid fa-circle-arrow-left"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+<table class="table mt-3">
+  <thead>
+    <tr>
+      <th scope="col" style="display: none">cartaoConsumoId</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Senha</th>
+      <th scope="col">Tipo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let users of usuarios.results; let i = index">
+      <td>{{ users.login }}</td>
+      <td>*******</td>
+      <td>{{ converteTipo(users.tipo) }}</td>
+      <td>
+        <button
+          id="printPageButton"
+          title="Editar Usuário"
+          class="btn btn-dark text-white"
+          data-bs-toggle="modal"
+          data-bs-target="#edit"
+          (click)="findUser(users.usuarioId)"
+        >
+          <i class="fa-solid fa-pen-to-square"></i>
+        </button>
+      </td>
+      <td>
+        <button
+          id="printPageButton"
+          title="Deletar Usuário"
+          class="btn btn-danger mx-3"
+          (click)="deleteUser(users.usuarioId)"
+        >
+          <i class="fa-solid fa-trash-can"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div
+  class="modal fade"
+  id="novo"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Novo Usuário</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form
+          class="form"
+          #cadastroUsuario="ngForm"
+          (ngSubmit)="onSubmit(cadastroUsuario.value)"
+          enctype="multipart/form-data"
+        >
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Nome</label>
+            <input
+              name="login"
+              type="text"
+              ngModel
+              min="0"
+              #login
+              class="form-control"
+              placeholder="Ex: Macoratti"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Senha</label>
+            <input
+              name="senha"
+              ngModel
+              type="text"
+              min="0"
+              #senha
+              class="form-control"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Tipo</label>
+            <select ngModel class="form-control" name="tipo" #tipo id="tipo">
+              <option value="1">Administrador</option>
+              <option value="3" selected>Caixa</option>
+            </select>
+          </div>
+          <button (click)="inserir()" type="submit" class="btn btn-primary">
+            Cadastrar
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="edit"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Usuário</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form
+          class="form"
+          #editUsuario="ngForm"
+          (ngSubmit)="onSubmit(editUsuario.value)"
+          enctype="multipart/form-data"
+        >
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Nome</label>
+            <input
+              name="login"
+              type="text"
+              value="{{ usuario.login }}"
+              [ngModel]="usuario.login"
+              min="0"
+              #login
+              class="form-control"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Senha</label>
+            <input
+              name="senha"
+              value="{{ usuario.senha }}"
+              [ngModel]="usuario.senha"
+              type="text"
+              min="0"
+              #senha
+              class="form-control"
+              id="exampleInputPassword1"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Tipo</label>
+            <select
+              value="{{ usuario.tipo }}"
+              [ngModel]="usuario.tipo"
+              class="form-control"
+              name="tipo"
+              #tipo
+              id="tipo"
+            >
+              <option value="1">Administrador</option>
+              <option value="3">Caixa</option>
+            </select>
+          </div>
+          <button (click)="editar()" type="submit" class="btn btn-primary">
+            Cadastrar
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

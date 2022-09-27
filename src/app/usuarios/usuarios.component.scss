@@ -1,0 +1,38 @@
+#imp {
+    width: 500px;
+    height: 595px;
+  }
+  
+  footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    background: grey;
+  }
+  
+  @media screen {
+    #printable {
+      display: none;
+    }
+  }
+  
+  @media print {
+    body * {
+      visibility: hidden;
+    }
+    #comprovante,
+    #comprovante * {
+      visibility: visible;
+      border: none;
+    }
+    #comprovante {
+      position: absolute;
+      border: none;
+      left: 0;
+      top: 0;
+    }
+    #printPageButton {
+      display: none;
+    }
+  }

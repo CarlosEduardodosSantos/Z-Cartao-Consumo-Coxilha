@@ -1,0 +1,163 @@
+<nav
+  id="navzao"
+  class="navbar navbar-light bg-primary"
+  style="border-bottom: 4px solid #0000; background-color: white !important"
+>
+  <div class="container-fluid">
+    <a style="padding: 25px" href="#" class="navbar-brand">
+      <img
+        src="/assets/logo.png"
+        width="80"
+        height="100"
+        alt=""
+        class="d-inline-block align-middle mr-2"
+      />
+      <span class="text-uppercase font-weight-bold mx-4">Cartão Consumo</span>
+    </a>
+    <div class="d-flex">
+      <button
+        title="Novo Usuário"
+        class="btn btn-success mx-4"
+        data-bs-toggle="modal"
+        data-bs-target="#novo"
+      >
+        <i class="fa-solid fa-circle-plus"></i>
+      </button>
+      <button
+        id="printPageButton"
+        title="Voltar"
+        class="btn btn-light mx-2"
+        (click)="voltarLogin()"
+      >
+        <i class="fa-solid fa-circle-arrow-left"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+<table class="table mt-3">
+  <thead>
+    <tr>
+      <th scope="col" style="display: none">cartaoConsumoId</th>
+      <th scope="col">Nome</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let groups of grupos.results; let i = index">
+      <td>{{ groups.descricao }}</td>
+      <td>
+        <button
+          id="printPageButton"
+          title="Editar Usuário"
+          class="btn btn-dark text-white"
+          data-bs-toggle="modal"
+          data-bs-target="#edit"
+          (click)="findGroup(groups.grupoId)"
+        >
+          <i class="fa-solid fa-pen-to-square"></i>
+        </button>
+      </td>
+      <td>
+        <button
+          id="printPageButton"
+          title="Deletar Usuário"
+          class="btn btn-danger mx-3"
+          (click)="deleteGroup(groups.grupoId)"
+        >
+          <i class="fa-solid fa-trash-can"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div
+  class="modal fade"
+  id="novo"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Novo Grupo</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form
+          class="form"
+          #cadastroUsuario="ngForm"
+          (ngSubmit)="onSubmit(cadastroUsuario.value)"
+          enctype="multipart/form-data"
+        >
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Nome</label>
+            <input
+              name="descricao"
+              type="text"
+              ngModel
+              min="0"
+              #descricao
+              class="form-control"
+              placeholder="Ex: Colaboradores"
+            />
+          </div>
+          <button (click)="inserir()" type="submit" class="btn btn-primary">
+            Cadastrar
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="edit"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Grupo</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form
+          class="form"
+          #editUsuario="ngForm"
+          (ngSubmit)="onSubmit(editUsuario.value)"
+          enctype="multipart/form-data"
+        >
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Nome</label>
+            <input
+              name="descricao"
+              type="text"
+              value="{{ grupo.descricao }}"
+              [ngModel]="grupo.descricao"
+              min="0"
+              #descricao
+              class="form-control"
+            />
+          </div>
+          <button (click)="editar()" type="submit" class="btn btn-primary">
+            Cadastrar
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
