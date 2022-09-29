@@ -135,7 +135,7 @@ export class AdminConsumoComponent implements OnInit {
       );
       if (consumo == null) {
         this.CartaoConsumoService.insertConsu(this.consumoModel).then(() => {
-          //location.reload();
+          location.reload();
           console.log(_grupo.value)
         });
       } else {
