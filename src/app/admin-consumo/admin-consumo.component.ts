@@ -36,6 +36,7 @@ export class AdminConsumoComponent implements OnInit {
   consumotodos: any;
   grupos: any;
   desc: any = "";
+  frete: any = true;
 
   isAdmin: any = localStorage.getItem('admin');
 
@@ -123,7 +124,8 @@ export class AdminConsumoComponent implements OnInit {
       restauranteId: _restaurante.value,
       saldoAtual: 0,
       grupo: _grupo.value,
-      registradoPor: localStorage.getItem('login')
+      registradoPor: localStorage.getItem('login'),
+      frete: this.frete
     };
     if (_numero.value !== '' && _desc !== '' && _validade !== '') {
       let consumo: any;
@@ -169,7 +171,8 @@ export class AdminConsumoComponent implements OnInit {
       Desconto: _descontoEdit,
       Nome: _nomeEdit,
       restauranteId: _restauranteEdit,
-      grupo: 'exemplo'
+      grupo: 'exemplo',
+      frete: this.frete
     };
   }
 
@@ -194,7 +197,8 @@ export class AdminConsumoComponent implements OnInit {
       Desconto: _descontoEdit,
       Nome: _nomeEdit,
       restauranteId: _restauranteEdit,
-      grupo: 'exemplo'
+      grupo: 'exemplo',
+      frete: this.frete
     };
     this.CartaoConsumoService.updateConsu(this.consumoModel).then(() =>
       window.alert('Registro Alterado!')
@@ -391,7 +395,8 @@ export class AdminConsumoComponent implements OnInit {
         Nome: this.consumo.nome,
         restauranteId: this.consumo.restauranteId,
         saldoAtual: soma,
-        grupo: this.desc
+        grupo: this.desc,
+        frete: this.frete
       };
       this.soma = soma;
       this.CartaoConsumoService.insertMov(this.mov);

@@ -13,4 +13,5 @@ export class iConsumo{
     public saldoAtual?: any;
     public grupo: any;
     public registradoPor?: any;
+    public frete: any;
 }

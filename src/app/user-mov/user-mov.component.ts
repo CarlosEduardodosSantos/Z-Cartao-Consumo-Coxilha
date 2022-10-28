@@ -29,6 +29,7 @@ export class UserMovComponent implements OnInit {
   isAdmin: any = localStorage.getItem('admin');
   index: any;
   grupos: any;
+  frete: any;
 
   constructor(
     private CartaoConsumoService: CartaoConsumoService,
@@ -60,6 +61,7 @@ export class UserMovComponent implements OnInit {
     await this.CartaoConsumoService.obterConsuByNr(this.Id).then((consum) => {
       this.consumo = consum;
       console.log(consum);
+      this.frete = this.consumo.frete;
     });
     await this.CartaoConsumoService.obterMovByConsuId(
       this.consumo.cartaoConsumoId
@@ -155,6 +157,7 @@ export class UserMovComponent implements OnInit {
       restauranteId: _restauranteEdit,
       saldoAtual: _saldoAtual,
       grupo: _desc.value,
+      frete: this.frete
     };
     if (
       _numeroEdit !== '' &&
@@ -200,7 +203,8 @@ export class UserMovComponent implements OnInit {
           Nome: this.consumo.nome,
           restauranteId: this.consumo.restauranteId,
           saldoAtual: _saldo,
-          grupo: this.consumo.grupo
+          grupo: this.consumo.grupo,
+          frete: this.frete
         };
         console.log(this.consumoModel);
         console.log(this.mov.valor);
@@ -225,7 +229,8 @@ export class UserMovComponent implements OnInit {
             Nome: this.consumo.nome,
             restauranteId: this.consumo.restauranteId,
             saldoAtual: _saldo,
-            grupo: this.consumo.grupo
+            grupo: this.consumo.grupo,
+            frete: this.frete
           };
           this.CartaoConsumoService.insertMov(this.mov).then(() =>
             location.reload()
@@ -273,5 +278,15 @@ export class UserMovComponent implements OnInit {
   }
   goToGroups() {
     this.router.navigate(['/grupos/']);
+  }
+
+  ativoString(tipo: any)
+  {
+     if(tipo == true){
+      return "Sim"
+     }
+     else{
+      return "Não"
+     }
   }
 }

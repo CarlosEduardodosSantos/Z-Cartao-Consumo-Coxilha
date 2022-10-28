@@ -117,6 +117,10 @@
         <td><b>Registrado Por:</b></td>
         <td>{{ consumo.registradoPor }}</td>
       </tr>
+      <tr>
+        <td><b>Cupom Fiscal:</b></td>
+        <td>{{ ativoString(consumo.frete) }}</td>
+      </tr>
     </tbody>
   </table>
 
@@ -303,6 +307,12 @@
               class="form-control"
               id="exampleInputPassword1"
             />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label"
+              >Cumpom Fiscal?</label
+            >
+            <input [ngModelOptions]="{standalone: true}" [(ngModel)]="frete" type="checkbox"/>
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label"

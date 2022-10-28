@@ -28,23 +28,7 @@ export class AppComponent implements OnInit {
     console.warn(this.consumId);
   }
 
-  getTxtInfo(_numero: any, _desc: any, _valor: any, _validade: any, _cpf: any, _desconto: any, _nome: any, _restaurante: any) {
-    this.consumoModel = { numero: _numero.value, descricao: _desc.value, valor: _valor.value, validade: _validade.value, Cpf: _cpf.value, Desconto: _desconto.value, Nome: _nome.value, restauranteId: _restaurante.value , grupo: 'exemplo'};
-    this.CartaoConsumoService.insertConsu(this.consumoModel).then(() => window.alert("Registro Inserido!"))
-    console.log(this.consumoModel);
-    location.reload();
-  }
 
-  getEditId(_guid: any, _numeroEdit: any, _descEdit: any, _valorEdit: any, _validadeEdit: any, _cpfEdit: any, _descontoEdit: any, _nomeEdit: any,  _restauranteEdit: any){
-    this.consumoModel = {cartaoConsumoId: _guid, numero: _numeroEdit, descricao: _descEdit, valor: _valorEdit, validade: _validadeEdit, Cpf: _cpfEdit, Desconto: _descontoEdit, Nome: _nomeEdit, restauranteId:  _restauranteEdit, grupo: 'exemplo' };
-  }
-
-  EditById(_guid: any, _numeroEdit: any, _descEdit: any, _valorEdit: any, _validadeEdit: any, _cpfEdit: any, _descontoEdit: any, _nomeEdit: any, _restauranteEdit: any) {
-    this.consumoModel = {cartaoConsumoId: _guid, numero: _numeroEdit, descricao: _descEdit, valor: _valorEdit, validade: _validadeEdit, Cpf: _cpfEdit, Desconto: _descontoEdit, Nome: _nomeEdit, restauranteId:  _restauranteEdit, grupo: 'exemplo'};
-    this.CartaoConsumoService.updateConsu(this.consumoModel).then(() => window.alert("Registro Alterado!"))
-    console.log(this.consumoModel);
-    location.reload();
-  }
   async ngOnInit() {
     
   }
