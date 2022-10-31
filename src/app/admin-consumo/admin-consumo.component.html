@@ -47,6 +47,14 @@
         <i class="fa-solid fa-circle-plus"></i>
       </button>
       <button
+        title="Transferir Saldo"
+        class="btn btn-light mx-4"
+        data-bs-toggle="modal"
+        data-bs-target="#ImpCre"
+      >
+        <i class="fa-solid fa-money-bill-transfer"></i>
+      </button>
+      <button
         class="btn btn-dark"
         title="Administrar Usuários"
         *ngIf="isAdmin === '1'"
@@ -148,27 +156,32 @@
               class="form-control"
               id="exampleInputPassword1"
             />
-              </div>
-              <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Grupo</label>
-              <div class="input-group mb-3">
-                <select #desc style="width:50%" class="form-select" name="desc">
-                  <option *ngFor="let grupo of grupos.results" [ngValue]="grupo.descricao">{{grupo.descricao}}</option>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Grupo</label>
+            <div class="input-group mb-3">
+              <select #desc style="width: 50%" class="form-select" name="desc">
+                <option
+                  *ngFor="let grupo of grupos.results"
+                  [ngValue]="grupo.descricao"
+                >
+                  {{ grupo.descricao }}
+                </option>
               </select>
               <div class="input-group-append">
-              <button
-              title="Adicionar novo grupo"
-              class="btn btn-success mx-4"
-              *ngIf="isAdmin === '1'"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-              (click)="goToGroups()"
-            >
-              <i class="fa-solid fa-circle-plus"></i>
-            </button>
+                <button
+                  title="Adicionar novo grupo"
+                  class="btn btn-success mx-4"
+                  *ngIf="isAdmin === '1'"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  (click)="goToGroups()"
+                >
+                  <i class="fa-solid fa-circle-plus"></i>
+                </button>
+              </div>
             </div>
-            </div>
-            </div>
+          </div>
 
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Número</label>
@@ -227,7 +240,7 @@
               class="form-control"
               value="0"
               id="exampleInputPassword1"
-              [disabled]="isAdmin !=='1'"
+              [disabled]="isAdmin !== '1'"
             />
           </div>
           <div class="mb-3">
@@ -302,25 +315,38 @@
               id="exampleInputPassword1"
             />
             <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">Grupo</label>
-            <div class="input-group mb-3">
-              <select #grupoc style="width:50%" class="form-select" name="grupoc" [(ngModel)]="grupos.results">
-                <option *ngFor="let grupo of grupos.results" [ngValue]="grupo.descricao">{{grupo.descricao}}</option>
-            </select>
-            <div class="input-group-append">
-            <button
-            title="Adicionar novo grupo"
-            class="btn btn-success mx-4"
-            *ngIf="isAdmin === '1'"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-            (click)="goToGroups()"
-          >
-            <i class="fa-solid fa-circle-plus"></i>
-          </button>
-          </div>
-          </div>
-          </div>
+              <label for="exampleInputPassword1" class="form-label"
+                >Grupo</label
+              >
+              <div class="input-group mb-3">
+                <select
+                  #grupoc
+                  style="width: 50%"
+                  class="form-select"
+                  name="grupoc"
+                  [(ngModel)]="grupos.results"
+                >
+                  <option
+                    *ngFor="let grupo of grupos.results"
+                    [ngValue]="grupo.descricao"
+                  >
+                    {{ grupo.descricao }}
+                  </option>
+                </select>
+                <div class="input-group-append">
+                  <button
+                    title="Adicionar novo grupo"
+                    class="btn btn-success mx-4"
+                    *ngIf="isAdmin === '1'"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    (click)="goToGroups()"
+                  >
+                    <i class="fa-solid fa-circle-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Número</label>
@@ -467,6 +493,14 @@
             />
           </div>
           <div class="mb-3">
+            <label for="exampleInputEmail1">Método</label>
+            <select #metodo class="form-select" aria-label="Modo de pagamento">
+              <option value="1" selected>Dinheiro</option>
+              <option value="2">Cartão Débito</option>
+              <option value="3">Cartão Crédito</option>
+            </select>
+          </div>
+          <div class="mb-3">
             <label
               for="exampleInputPassword1"
               style="visibility: hidden"
@@ -492,7 +526,7 @@
         </button>
         <button
           type="button"
-          (click)="getTxtInfoMov(saldoC.value, tipoC.value)"
+          (click)="getTxtInfoMov(saldoC.value, tipoC.value, metodo.value)"
           class="btn btn-primary"
           data-bs-toggle="modal"
           data-bs-target="#gerarComprovante"
@@ -575,19 +609,19 @@
         <h5><b>GRAND HOTEL</b></h5>
         <table class="table mt-3">
           <tr>
-            <td>Nome:  {{ this.consumo.nome }}</td>
+            <td>Nome: {{ this.consumo.nome }}</td>
           </tr>
           <tr>
-            <td>Nº:  {{ this.consumo.numero }}</td>
+            <td>Nº: {{ this.consumo.numero }}</td>
           </tr>
           <tr>
-            <td>Data da transação:  {{ converterLongDate(dataMovAtual) }}</td>
+            <td>Data da transação: {{ converterLongDate(dataMovAtual) }}</td>
           </tr>
           <tr>
-            <td>Valor:  +{{ converterCurrency(valorMovAtual) }}</td>
+            <td>Valor: +{{ converterCurrency(valorMovAtual) }}</td>
           </tr>
           <tr>
-            <td>Saldo Atual:  {{ converterCurrency(soma) }}</td>
+            <td>Saldo Atual: {{ converterCurrency(soma) }}</td>
           </tr>
         </table>
       </div>
@@ -661,6 +695,14 @@
             />
           </div>
           <div class="mb-3">
+            <label for="exampleInputEmail1">Método</label>
+            <select #metodo2 class="form-select" aria-label="Modo de pagamento">
+              <option value="1" selected>Dinheiro</option>
+              <option value="2">Cartão Débito</option>
+              <option value="3">Cartão Crédito</option>
+            </select>
+          </div>
+          <div class="mb-3">
             <label
               for="exampleInputPassword1"
               style="visibility: hidden"
@@ -686,7 +728,9 @@
         </button>
         <button
           type="button"
-          (click)="getTxtInfoMovWithNro(saldoCN.value, tipoCN.value)"
+          (click)="
+            getTxtInfoMovWithNro(saldoCN.value, tipoCN.value, metodo2.value)
+          "
           class="btn btn-primary"
           data-bs-toggle="modal"
           data-bs-target="#gerarComprovante"
@@ -697,6 +741,96 @@
     </div>
   </div>
 </div>
+
+<div
+  class="modal fade"
+  id="ImpCre"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Implantar Crédito</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label"
+              >Nº do Cartão com Saldo</label
+            >
+            <input
+              type="text"
+              (keyup)="consumId = $any($event.target).value; getTxtValue()"
+              min="0"
+              #nroImp1
+              class="form-control"
+              placeholder="Ex: 0000000"
+              id="exampleInputPassword1"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label"
+              >Nº do Novo Cartão</label
+            >
+            <input
+              type="text"
+              (keyup)="consumId2 = $any($event.target).value; getTxtValue()"
+              min="0"
+              #nroImp2
+              class="form-control"
+              placeholder="Ex: 0000000"
+              id="exampleInputPassword1"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Valor</label>
+            <input
+              type="number"
+              min="0"
+              #saldoImp
+              class="form-control"
+              placeholder="Ex: 00.00"
+              id="exampleInputPassword1"
+            />
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Fechar
+        </button>
+        <button
+          type="button"
+          (click)="
+            impCre(nroImp1.value, nroImp2.value, saldoImp.value)
+          "
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#gerarComprovante"
+        >
+          Carregar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
 
 <footer id="printPageButton" class="bg-light text-center text-lg-start">
   <div

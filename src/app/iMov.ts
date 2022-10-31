@@ -6,4 +6,5 @@ export class iMov {
     public dataMov?:any;
     public usuarioId: any;
     public login: any;
+    public metodo: any;
 }

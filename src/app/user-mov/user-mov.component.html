@@ -139,6 +139,7 @@
         <th scope="col">Movimentações</th>
         <th scope="col">Valor</th>
         <th scope="col">Colaborador</th>
+        <th scope="col">Método</th>
         <th scope="col">
           <button
             id="printPageButton"
@@ -170,6 +171,7 @@
         <td>{{ converterLongDate(mov.dataMov) }}</td>
         <td>{{ converterCurrencyMov(mov.saldo, mov.tipoMov) }}</td>
         <td>{{ mov.login }}</td>
+        <td>{{converteMetodo(mov.metodo) }}</td>
         <td>
           <button
             id="printPageButton"
@@ -602,9 +604,23 @@
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Tipo</label>
-            <select class="form-control" name="tipo2" #tipo2 id="tipo">
+            <select class="form-control" name="tipo2" #tipo2 id="tipo"
+            (change)="logar(tipo2.value)">
               <option value="1">Positivo</option>
               <option value="2">Negativo</option>
+            </select>
+          </div>
+          <div *ngIf="tipo2.value == '1';" class="mb-3">
+            <label for="exampleInputEmail1">Método</label>
+            <select
+              #metodo2
+              (change)="logar(metodo2.value)"
+              class="form-select"
+              aria-label="Modo de pagamento"
+            >
+              <option value="1" selected>Dinheiro</option>
+              <option value="2">Cartão Débito</option>
+              <option value="3">Cartão Crédito</option>
             </select>
           </div>
         </form>
@@ -615,7 +631,7 @@
         </button>
         <button
           type="button"
-          (click)="getTxtInfoMov(saldo2.value, tipo2.value)"
+          (click)="getTxtInfoMov(saldo2.value, tipo2.value, metodo2.value)"
           class="btn btn-primary"
         >
           Salvar
@@ -663,6 +679,19 @@
               <option value="2">Negativo</option>
             </select>
           </div>
+          <div *ngIf="tipo3.value == '1';" class="mb-3">
+            <label for="exampleInputEmail1">Método</label>
+            <select
+              #metodo3
+              (change)="logar(metodo3.value)"
+              class="form-select"
+              aria-label="Modo de pagamento"
+            >
+              <option value="1" selected>Dinheiro</option>
+              <option value="2">Cartão Débito</option>
+              <option value="3">Cartão Crédito</option>
+            </select>
+          </div>
         </form>
       </div>
       <div class="modal-footer">
@@ -671,7 +700,7 @@
         </button>
         <button
           type="button"
-          (click)="getTxtInfoMov(saldo3.value, tipo3.value)"
+          (click)="getTxtInfoMov(saldo3.value, tipo3.value, metodo3.value)"
           class="btn btn-primary"
         >
           Salvar

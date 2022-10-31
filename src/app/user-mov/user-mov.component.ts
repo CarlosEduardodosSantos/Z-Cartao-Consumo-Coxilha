@@ -30,6 +30,8 @@ export class UserMovComponent implements OnInit {
   index: any;
   grupos: any;
   frete: any;
+  metodo2: any;
+  metodo3: any;
 
   constructor(
     private CartaoConsumoService: CartaoConsumoService,
@@ -157,7 +159,7 @@ export class UserMovComponent implements OnInit {
       restauranteId: _restauranteEdit,
       saldoAtual: _saldoAtual,
       grupo: _desc.value,
-      frete: this.frete
+      frete: this.frete,
     };
     if (
       _numeroEdit !== '' &&
@@ -180,7 +182,7 @@ export class UserMovComponent implements OnInit {
     }
   }
 
-  getTxtInfoMov(_saldo: any, _tipoMov: any) {
+  getTxtInfoMov(_saldo: any, _tipoMov: any, _metodo: any) {
     this.mov = {
       numeroCartao: this.consumo.numero,
       valor: _saldo,
@@ -188,6 +190,7 @@ export class UserMovComponent implements OnInit {
       restauranteId: environment.resId,
       usuarioId: localStorage.getItem('usuarioId'),
       login: localStorage.getItem('login'),
+      metodo: _metodo,
     };
     if (this.mov.valor !== '' && this.mov.tipoMov !== '') {
       if (this.mov.tipoMov === '1') {
@@ -204,7 +207,7 @@ export class UserMovComponent implements OnInit {
           restauranteId: this.consumo.restauranteId,
           saldoAtual: _saldo,
           grupo: this.consumo.grupo,
-          frete: this.frete
+          frete: this.frete,
         };
         console.log(this.consumoModel);
         console.log(this.mov.valor);
@@ -230,7 +233,7 @@ export class UserMovComponent implements OnInit {
             restauranteId: this.consumo.restauranteId,
             saldoAtual: _saldo,
             grupo: this.consumo.grupo,
-            frete: this.frete
+            frete: this.frete,
           };
           this.CartaoConsumoService.insertMov(this.mov).then(() =>
             location.reload()
@@ -267,6 +270,7 @@ export class UserMovComponent implements OnInit {
       tipoMov: parseInt(this.movimentacao.results[this.index].tipoMov),
       usuarioId: localStorage.getItem('usuarioId'),
       login: localStorage.getItem('login'),
+      metodo: this.movimentacao.results[this.index].metodo,
     };
     if (_saldo !== '') {
       this.CartaoConsumoService.updateMov(this.movE).then(() =>
@@ -280,13 +284,32 @@ export class UserMovComponent implements OnInit {
     this.router.navigate(['/grupos/']);
   }
 
-  ativoString(tipo: any)
+  ativoString(tipo: any) {
+    if (tipo == true) {
+      return 'Sim';
+    } else {
+      return 'Não';
+    }
+  }
+  logar(cari: any)
   {
-     if(tipo == true){
-      return "Sim"
-     }
-     else{
-      return "Não"
-     }
+    console.log(cari);
+  }
+  converteMetodo(met: any){
+    if(met == 1){
+      return "Dinheiro";
+    }
+    else if(met == 2){
+      return "Cartão Débito";
+    }
+    else if(met == 3){
+      return "Cartão Crédito";
+    }
+    else if(met == 5){
+      return "Implantação de Crédito";
+    }
+    else{
+      return ""
+    }
   }
 }

@@ -35,8 +35,9 @@ export class AdminConsumoComponent implements OnInit {
   soma: any;
   consumotodos: any;
   grupos: any;
-  desc: any = "";
+  desc: any = '';
   frete: any = true;
+  consumo2: any;
 
   isAdmin: any = localStorage.getItem('admin');
 
@@ -66,10 +67,9 @@ export class AdminConsumoComponent implements OnInit {
   }
 
   converterLongDate(data: any) {
-    let dataFormatada = new Date(data).toLocaleDateString()
-    return  dataFormatada;
+    let dataFormatada = new Date(data).toLocaleDateString();
+    return dataFormatada;
   }
-
 
   catchIndex(i: any) {
     this.index = i;
@@ -90,6 +90,7 @@ export class AdminConsumoComponent implements OnInit {
   ) {}
   consumoModel: iConsumo = new iConsumo();
   consumId: any;
+  consumId2: any;
   mov: iMovXandao = new iMovXandao();
 
   getTxtValue() {
@@ -125,7 +126,7 @@ export class AdminConsumoComponent implements OnInit {
       saldoAtual: 0,
       grupo: _grupo.value,
       registradoPor: localStorage.getItem('login'),
-      frete: this.frete
+      frete: this.frete,
     };
     if (_numero.value !== '' && _desc !== '' && _validade !== '') {
       let consumo: any;
@@ -138,7 +139,7 @@ export class AdminConsumoComponent implements OnInit {
       if (consumo == null) {
         this.CartaoConsumoService.insertConsu(this.consumoModel).then(() => {
           location.reload();
-          console.log(_grupo.value)
+          console.log(_grupo.value);
         });
       } else {
         window.alert('O cartão ja existe!');
@@ -172,7 +173,7 @@ export class AdminConsumoComponent implements OnInit {
       Nome: _nomeEdit,
       restauranteId: _restauranteEdit,
       grupo: 'exemplo',
-      frete: this.frete
+      frete: this.frete,
     };
   }
 
@@ -198,7 +199,7 @@ export class AdminConsumoComponent implements OnInit {
       Nome: _nomeEdit,
       restauranteId: _restauranteEdit,
       grupo: 'exemplo',
-      frete: this.frete
+      frete: this.frete,
     };
     this.CartaoConsumoService.updateConsu(this.consumoModel).then(() =>
       window.alert('Registro Alterado!')
@@ -333,7 +334,7 @@ export class AdminConsumoComponent implements OnInit {
     location.href = '/';
   }
 
-  async getTxtInfoMov(_saldo: any, _tipoMov: any) {
+  async getTxtInfoMov(_saldo: any, _tipoMov: any, _metodo: any) {
     await this.CartaoConsumoService.obterConsuById(this.Id).then((consum) => {
       this.consumo = consum;
     });
@@ -342,8 +343,9 @@ export class AdminConsumoComponent implements OnInit {
       valor: _saldo,
       tipoMov: _tipoMov,
       restauranteId: environment.resId,
-      usuarioId:  localStorage.getItem('usuarioId'),
-      login: localStorage.getItem('login')
+      usuarioId: localStorage.getItem('usuarioId'),
+      login: localStorage.getItem('login'),
+      metodo: _metodo,
     };
     if (this.mov.valor !== '' && this.mov.tipoMov !== '') {
       this.dataMovAtual = new Date();
@@ -359,7 +361,7 @@ export class AdminConsumoComponent implements OnInit {
     }
   }
 
-  async getTxtInfoMovWithNro(_saldo: any, _tipoMov: any) {
+  async getTxtInfoMovWithNro(_saldo: any, _tipoMov: any, _metodo: any) {
     await this.CartaoConsumoService.obterConsuByNr(this.consumId).then(
       (consum) => {
         this.consumo = consum;
@@ -378,27 +380,10 @@ export class AdminConsumoComponent implements OnInit {
         valor: _saldo,
         tipoMov: _tipoMov,
         restauranteId: environment.resId,
-        usuarioId:  localStorage.getItem('usuarioId'),
-        login: localStorage.getItem('login')
+        usuarioId: localStorage.getItem('usuarioId'),
+        login: localStorage.getItem('login'),
+        metodo: _metodo,
       };
-      this.dataMovAtual = new Date();
-      this.valorMovAtual = this.mov.valor;
-      let soma = parseFloat(this.consumo.saldoAtual) + parseFloat(_saldo);
-      this.consumoModel = {
-        cartaoConsumoId: this.consumo.cartaoConsumoId,
-        numero: this.consumo.numero,
-        descricao: this.consumo.descricao,
-        valor: this.consumo.valor,
-        validade: this.consumo.validade,
-        Cpf: this.consumo.cpf,
-        Desconto: this.consumo.desconto,
-        Nome: this.consumo.nome,
-        restauranteId: this.consumo.restauranteId,
-        saldoAtual: soma,
-        grupo: this.desc,
-        frete: this.frete
-      };
-      this.soma = soma;
       this.CartaoConsumoService.insertMov(this.mov);
     } else {
       window.alert('Cartão consumo não encontrado!');
@@ -413,5 +398,56 @@ export class AdminConsumoComponent implements OnInit {
 
   goToGroups() {
     this.router.navigate(['/grupos/']);
+  }
+
+  async impCre(id1: any, id2: any, vl: any){
+    await this.CartaoConsumoService.obterConsuByNr(id1).then(
+      (consum) => {
+        this.consumo = consum;
+      }
+    );
+    await this.CartaoConsumoService.obterConsuByNr(id2).then(
+      (consum) => {
+        this.consumo2 = consum;
+      }
+    );
+
+    if(this.consumo !== null && this.consumo2 !== null && vl !== null)
+    {
+      this.index = 0;
+      this.mov = {
+        numeroCartao: this.consumo.numero,
+        valor: vl,
+        tipoMov: 2,
+        restauranteId: environment.resId,
+        usuarioId: localStorage.getItem('usuarioId'),
+        login: localStorage.getItem('login'),
+        metodo: 5,
+      };
+      if(this.consumo.saldoAtual >= vl)
+      {
+        await this.CartaoConsumoService.insertMov(this.mov);
+
+        this.mov = {
+          numeroCartao: this.consumo2.numero,
+          valor: vl,
+          tipoMov: 1,
+          restauranteId: environment.resId,
+          usuarioId: localStorage.getItem('usuarioId'),
+          login: localStorage.getItem('login'),
+          metodo: 5,
+        };
+           
+        await this.CartaoConsumoService.insertMov(this.mov);
+
+      }
+    }
+
+    else{
+      window.alert('Cartão consumo não encontrado!');
+      this.reloading();
+      console.log(this.mov);
+    }
+
   }
 }

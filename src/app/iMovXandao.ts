@@ -7,4 +7,5 @@ export class iMovXandao {
   public historico?: any;
   public usuarioId: any;
   public login: any;
+  public metodo: any;
 }
