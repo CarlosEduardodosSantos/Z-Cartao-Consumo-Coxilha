@@ -30,8 +30,6 @@ export class UserMovComponent implements OnInit {
   index: any;
   grupos: any;
   frete: any;
-  metodo2: any;
-  metodo3: any;
 
   constructor(
     private CartaoConsumoService: CartaoConsumoService,
@@ -183,6 +181,11 @@ export class UserMovComponent implements OnInit {
   }
 
   getTxtInfoMov(_saldo: any, _tipoMov: any, _metodo: any) {
+    var metodo: any = _metodo;
+    if(_tipoMov == 2)
+    {
+      metodo = 0
+    }
     this.mov = {
       numeroCartao: this.consumo.numero,
       valor: _saldo,
@@ -190,7 +193,7 @@ export class UserMovComponent implements OnInit {
       restauranteId: environment.resId,
       usuarioId: localStorage.getItem('usuarioId'),
       login: localStorage.getItem('login'),
-      metodo: _metodo,
+      metodo: metodo,
     };
     if (this.mov.valor !== '' && this.mov.tipoMov !== '') {
       if (this.mov.tipoMov === '1') {
@@ -307,6 +310,10 @@ export class UserMovComponent implements OnInit {
     }
     else if(met == 5){
       return "Implantação de Crédito";
+    }
+    else if(met == 0)
+    {
+      return "Negativa";
     }
     else{
       return ""

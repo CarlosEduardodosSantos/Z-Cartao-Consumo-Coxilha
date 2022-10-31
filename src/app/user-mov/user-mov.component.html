@@ -65,7 +65,7 @@
   </nav>
 </div>
 <div id="tabelas">
-  <table
+  <table [hidden]="isAdmin !== '3' && isAdmin !== '1'" 
     id="tabela1"
     class="table table-striped"
     style="
@@ -610,7 +610,7 @@
               <option value="2">Negativo</option>
             </select>
           </div>
-          <div *ngIf="tipo2.value == '1';" class="mb-3">
+          <div [hidden]="tipo2.value == '2'" class="mb-3">
             <label for="exampleInputEmail1">Método</label>
             <select
               #metodo2
@@ -679,7 +679,7 @@
               <option value="2">Negativo</option>
             </select>
           </div>
-          <div *ngIf="tipo3.value == '1';" class="mb-3">
+          <div [hidden]="tipo3.value == '2'" class="mb-3">
             <label for="exampleInputEmail1">Método</label>
             <select
               #metodo3
