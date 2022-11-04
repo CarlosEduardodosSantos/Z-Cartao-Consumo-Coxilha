@@ -243,4 +243,37 @@ export class CartaoConsumoService {
         return res;
       });
   }
+  //caixa
+
+  public obterTudoAbertoPorDia(date: any) {
+    return this.HttpClient.get(
+      `${environment.apiurl}api/CartaoConsumo/obterCaixaAberto/${date}`
+    ).toPromise().then((res)=>{return res});
+  }
+  fecharCaixa(date: any, login: any, valor: any) {
+    return this.HttpClient
+      .put(`${environment.apiurl}api/CartaoConsumo/fecharCaixa/${date}/${login}/${valor}`, null)
+      .toPromise()
+      .then((res) => {
+        return res;
+      });
+  }
+
+  //auditoria
+
+  public obterTudoAuditoria() {
+    return this.HttpClient.get(
+      `${environment.apiurl}api/CartaoConsumo/obterAuditoria`
+    ).toPromise().then((res)=>{return res});
+  }
+
+  public obterAuditoriaData(date: any) {
+    return this.HttpClient.get(
+      `${environment.apiurl}api/CartaoConsumo/obterAuditoriaData/${date}`
+    ).toPromise().then((res)=>{return res});
+  }
+
+
+
+
 }

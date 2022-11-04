@@ -1,0 +1,120 @@
+<nav
+  id="navzao"
+  class="navbar navbar-light bg-primary"
+  style="border-bottom: 4px solid #0000; background-color: white !important"
+>
+  <div class="container-fluid">
+    <a style="padding: 25px" href="#" class="navbar-brand">
+      <img
+        src="/assets/logo.png"
+        width="80"
+        height="100"
+        alt=""
+        class="d-inline-block align-middle mr-2"
+      />
+      <span class="text-uppercase font-weight-bold mx-4">Caixa</span>
+    </a>
+
+    <div class="d-flex" id="printText">
+
+      <input
+        type="date"
+        style="width: 200px"
+        #dataInicial
+        class="form-control mx-2"
+        aria-describedby="emailHelp"
+        value="{{ dataagora }}"
+        (change)="searchByDate(dataInicial.value)"
+      />
+      <button
+      id="printPageButton"
+        title="Imprimir"
+        class="btn btn-secondary mx-2"
+        (click)="printThisPage()"
+      >
+        <i class="fas fa-print"></i>
+      </button>
+      <button
+      id="printPageButton"
+        title="Fechar Caixa"
+        class="btn btn-success mx-2"
+        (click)="fecharCaixa(dataInicial.value)"
+      >
+      <i class="fa-solid fa-check"></i>
+      </button>
+      <button
+      id="printPageButton"
+        title="Voltar"
+        class="btn btn-dark mx-2"
+        (click)="gotoCadastro()"
+      >
+      <i class="fa-solid fa-arrow-left"></i>
+      </button>
+
+    </div>
+  </div>
+</nav>
+
+<table class="table mt-3">
+  <thead>
+    <tr>
+      <th scope="col">Data</th>
+      <th scope="col">Número do Cartão</th>
+      <th scope="col">Histórico</th>
+      <th scope="col">Usuário</th>
+      <th scope="col">Método</th>
+      <th scope="col">Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let cx of caixa.results; let i = index">
+      <td>{{ converterLongDate(cx.data) }}</td>
+      <td>{{ cx.nro }}</td>
+      <td>{{ cx.historico }}</td>
+      <td>{{ cx.login }}</td>
+      <td>{{ converteMetodo(cx.metodo) }}</td>
+      <td>{{ converterCurrency(cx.valor) }}</td>
+    </tr>
+    <tr class="table-secondary">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><b>Total em Dinheiro:</b></td>
+        <td>{{ sumValoresDinheiro() }}</td>
+      </tr>
+      <tr class="table-secondary">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><b>Total em Cartão:</b></td>
+        <td>{{ sumValoresCartao() }}</td>
+      </tr>
+      <tr class="table-secondary">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><b>Total de Implantações:</b></td>
+        <td>{{ sumValoresImp() }}</td>
+      </tr>      <tr class="table-secondary">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><b>Total em Mov Negativas:</b></td>
+        <td>{{ sumValoresNeg() }}</td>
+      </tr>
+      <tr class="table-secondary">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><b>Total no Caixa:</b></td>
+        <td>{{ sumTotal() }}</td>
+      </tr>
+
+  </tbody>
+</table>
+

@@ -12,6 +12,8 @@ import jsPDF from "jspdf";
 import { CadastroComponent } from './cadastro/cadastro.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { GruposComponent } from './grupos/grupos.component';
+import { CaixaComponent } from './caixa/caixa.component';
+import { AuditoriaComponent } from './auditoria/auditoria.component';
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import { GruposComponent } from './grupos/grupos.component';
     AdminConsumoComponent,
     CadastroComponent,
     UsuariosComponent,
-    GruposComponent
+    GruposComponent,
+    CaixaComponent,
+    AuditoriaComponent
   ],
   imports: [
     BrowserModule,

@@ -396,8 +396,16 @@ export class AdminConsumoComponent implements OnInit {
     this.router.navigate(['/usuarios/']);
   }
 
+  goToCaixa() {
+    this.router.navigate(['/caixa/']);
+  }
+
   goToGroups() {
     this.router.navigate(['/grupos/']);
+  }
+
+  goToAuditoria() {
+    this.router.navigate(['/auditoria/']);
   }
 
   async impCre(id1: any, id2: any, vl: any){

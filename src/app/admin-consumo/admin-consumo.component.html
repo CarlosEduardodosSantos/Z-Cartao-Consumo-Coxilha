@@ -15,15 +15,7 @@
       <span class="text-uppercase font-weight-bold mx-4">Cartão Consumo</span>
     </a>
     <div class="d-flex">
-      <button
-        title="Adicionar Movimentação"
-        class="btn btn-success mx-4"
-        *ngIf="isAdmin === '3'"
-        data-bs-toggle="modal"
-        data-bs-target="#insertMovCN"
-      >
-        <i class="fa-solid fa-circle-plus"></i>
-      </button>
+
       <button
         title="Pesquisar"
         (click)="obterConsulByNrOrName(consumId)"
@@ -33,36 +25,62 @@
       </button>
       <input
         type="text"
-        style="width: 500px"
+        style="width: 300px"
         (keyup.enter)="obterConsulByNrOrName(consumId)"
         name="search"
         (keyup)="consumId = $any($event.target).value; getTxtValue()"
       />
       <button
         title="Adicionar novo cartão"
-        class="btn btn-light mx-4"
+        class="btn btn-dark mx-2"
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
       >
         <i class="fa-solid fa-circle-plus"></i>
       </button>
       <button
+      title="Adicionar Movimentação"
+      class="btn btn-success mx-2"
+      *ngIf="isAdmin === '3' || isAdmin ==='1'"
+      data-bs-toggle="modal"
+      data-bs-target="#insertMovCN"
+    >
+    <i class="fa-solid fa-money-bill"></i>
+    </button>
+      <button
         title="Transferir Saldo"
-        class="btn btn-light mx-4"
+        class="btn btn-warning mx-2"
         data-bs-toggle="modal"
         data-bs-target="#ImpCre"
       >
         <i class="fa-solid fa-money-bill-transfer"></i>
       </button>
       <button
-        class="btn btn-dark"
+      id="printPageButton"
+        title="Caixa"
+        class="btn btn-secondary mx-2"
+        (click)="goToCaixa()"
+      >
+        <i class="fa-solid fa-cash-register"></i>
+      </button>
+
+      <button
+      id="printPageButton"
+        title="Auditoria"
+        class="btn btn-info mx-2"
+        (click)="goToAuditoria()"
+      >
+      <i class="fa-solid fa-book"></i>
+      </button>
+      <button
+        class="btn btn-dark mx-2"
         title="Administrar Usuários"
         *ngIf="isAdmin === '1'"
         (click)="goToUsers()"
       >
         <i class="fa-solid fa-circle-user"></i>
       </button>
-      <button title="Sair" class="btn btn-danger mx-4" (click)="Sair()">
+      <button title="Sair" class="btn btn-danger mx-2" (click)="Sair()">
         <i class="fa-solid fa-arrow-right-from-bracket"></i>
       </button>
     </div>
@@ -98,8 +116,8 @@
       <td>
         <button
           title="Detalhes"
-          class="btn btn-dark"
-          *ngIf="isAdmin === '1'"
+          class="btn btn-warning"
+          *ngIf="isAdmin === '1' || isAdmin === '3'"
           (click)="obterConsulByNr(consum.numero)"
         >
           <i class="fa-solid fa-circle-info"></i>
@@ -107,7 +125,7 @@
         <button
           title="Adicionar Movimentação"
           class="btn btn-dark mx-2"
-          *ngIf="isAdmin === '3'"
+          *ngIf="isAdmin === '3'|| isAdmin === '1'"
           (click)="catchIndex(i); catchId(Id.innerText)"
           data-bs-toggle="modal"
           data-bs-target="#insertMovC"

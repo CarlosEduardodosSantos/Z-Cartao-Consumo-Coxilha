@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { AdminConsumoComponent } from './admin-consumo/admin-consumo.component';
 import { UserMovComponent } from './user-mov/user-mov.component';
 import { GruposComponent } from './grupos/grupos.component';
+import { CaixaComponent } from './caixa/caixa.component';
+import { AuditoriaComponent } from './auditoria/auditoria.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -16,6 +18,8 @@ const routes: Routes = [
   { path: 'admin', component: AdminConsumoComponent },
   { path: 'usuarios', component: UsuariosComponent },
   { path: 'grupos', component: GruposComponent },
+  { path: 'caixa', component: CaixaComponent },
+  { path: 'auditoria', component: AuditoriaComponent },
 ];
 
 export const login = 'admin';
