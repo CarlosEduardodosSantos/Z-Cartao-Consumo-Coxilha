@@ -36,7 +36,7 @@ console.log(this.caixa);
   }
 
   converterLongDate(data: any) {
-    let dataFormatada = new Date(data).toLocaleDateString()
+    let dataFormatada = new Date(data).toLocaleString()
     return  dataFormatada;
   }
 

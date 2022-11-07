@@ -13,20 +13,20 @@
           alt=""
           class="d-inline-block align-middle mr-2"
         />
-        <span class="text-uppercase font-weight-bold mx-4">Cartão Consumo</span>
+        <span class="text-uppercase font-weight-bold mx-4">Consulta Cartão Consumo</span>
       </a>
-      
+
       <div class="d-flex">
         <button
-        id="printPageButton"
-        title="Inserir Movimentação"
-        class="btn btn-dark"
-        *ngIf="isAdmin === '3'"
-        data-bs-toggle="modal"
-        data-bs-target="#insertMovC"
-      >
-        <i class="fa-solid fa-circle-plus"></i>
-      </button>
+          id="printPageButton"
+          title="Inserir Movimentação"
+          class="btn btn-success mx-2"
+          *ngIf="isAdmin === '1' || isAdmin === '3'"
+          data-bs-toggle="modal"
+          data-bs-target="#insertMovC"
+        >
+          <i class="fa-solid fa-circle-plus"></i>
+        </button>
         <button
           id="printPageButton"
           title="Imprimir"
@@ -39,31 +39,23 @@
           id="printPageButton"
           title="Editar Registro de Cartão"
           class="btn btn-warning mx-2"
-          *ngIf="isAdmin === '1'"
+          *ngIf="isAdmin === '1' || isAdmin === '3'"
           data-bs-toggle="modal"
           data-bs-target="#editModal"
         >
           <i class="fa-solid fa-pen-to-square"></i>
         </button>
-        <button
-          id="printPageButton"
-          class="btn btn-secondary mx-2"
-          *ngIf="isAdmin === '3'"
-          data-bs-toggle="modal"
-          data-bs-target="#editModalC"
-        >
-          <i class="fa-solid fa-pen-to-square"></i>
-        </button>
+
         <button
           id="printPageButton"
           title="Voltar"
-          class="btn btn-light mx-2"
+          class="btn btn-dark mx-2"
           *ngIf="isAdmin === '1' || isAdmin === '3'"
           (click)="voltarLogin()"
         >
-          <i class="fa-solid fa-circle-arrow-left"></i>
+        <i class="fa-solid fa-arrow-left"></i>
         </button>
-        <button
+        <button *ngIf="isAdmin !=='1' && isAdmin !=='3'"
           id="printPageButton"
           title="Sair"
           class="btn btn-danger mx-2"
@@ -76,7 +68,8 @@
   </nav>
 </div>
 <div id="tabelas">
-  <table [hidden]="isAdmin !== '3' && isAdmin !== '1'" 
+  <table
+    [hidden]="isAdmin !== '3' && isAdmin !== '1'"
     id="tabela1"
     class="table table-striped"
     style="
@@ -146,6 +139,22 @@
     "
   >
     <thead>
+      <tr *ngIf="isAdmin !== '1' && isAdmin !== '3'">
+        <td>
+          <b>{{ restaurante.nome }}</b>
+        </td>
+        <td></td>
+        <td></td>
+        <td>
+          <b>{{ converterDate(dataagora) }}</b>
+        </td>
+      </tr>
+      <tr *ngIf="isAdmin !== '1' && isAdmin !== '3'" class="table-secondary">
+        <td><b>Número:</b></td>
+        <td>{{ consumo.numero }}</td>
+        <td><b>Saldo Atual:</b></td>
+        <td>{{ converterCurrency(consumo.saldoAtual) }}</td>
+      </tr>
       <tr>
         <th scope="col">Movimentações</th>
         <th scope="col">Valor</th>
@@ -158,8 +167,7 @@
         <td>{{ converterLongDate(mov.dataMov) }}</td>
         <td>{{ converterCurrencyMov(mov.saldo, mov.tipoMov) }}</td>
         <td>{{ mov.login }}</td>
-        <td>{{converteMetodo(mov.metodo) }}</td>
-       
+        <td>{{ converteMetodo(mov.metodo) }}</td>
       </tr>
     </tbody>
   </table>
@@ -194,25 +202,37 @@
               id="exampleInputPassword1"
             />
             <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">Grupo</label>
-            <div class="input-group mb-3">
-              <select #desc style="width:50%" class="form-select" name="desc">
-                <option *ngFor="let grupo of grupos.results" [ngValue]="grupo.descricao">{{grupo.descricao}}</option>
-            </select>
-            <div class="input-group-append">
-            <button
-            title="Adicionar novo grupo"
-            class="btn btn-success mx-4"
-            *ngIf="isAdmin === '1'"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-            (click)="goToGroups()"
-          >
-            <i class="fa-solid fa-circle-plus"></i>
-          </button>
-          </div>
-          </div>
-          </div>
+              <label for="exampleInputPassword1" class="form-label"
+                >Grupo</label
+              >
+              <div class="input-group mb-3">
+                <select
+                  #desc
+                  style="width: 50%"
+                  class="form-select"
+                  name="desc"
+                >
+                  <option
+                    *ngFor="let grupo of grupos.results"
+                    [ngValue]="grupo.descricao"
+                  >
+                    {{ grupo.descricao }}
+                  </option>
+                </select>
+                <div class="input-group-append">
+                  <button
+                    title="Adicionar novo grupo"
+                    class="btn btn-success mx-4"
+                    *ngIf="isAdmin === '1'"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    (click)="goToGroups()"
+                  >
+                    <i class="fa-solid fa-circle-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">CPF</label>
@@ -278,7 +298,11 @@
             <label for="exampleInputPassword1" class="form-label"
               >Cumpom Fiscal?</label
             >
-            <input [ngModelOptions]="{standalone: true}" [(ngModel)]="frete" type="checkbox"/>
+            <input
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="frete"
+              type="checkbox"
+            />
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label"
@@ -358,26 +382,37 @@
             />
 
             <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">Grupo</label>
-            <div class="input-group mb-3">
-              <select #desc style="width:50%" class="form-select" name="desc">
-                <option *ngFor="let grupo of grupos.results" [ngValue]="grupo.descricao">{{grupo.descricao}}</option>
-            </select>
-            <div class="input-group-append">
-            <button
-            title="Adicionar novo grupo"
-            class="btn btn-success mx-4"
-            *ngIf="isAdmin === '1'"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-            (click)="goToGroups()"
-          >
-            <i class="fa-solid fa-circle-plus"></i>
-          </button>
-          </div>
-          </div>
-          </div>
-
+              <label for="exampleInputPassword1" class="form-label"
+                >Grupo</label
+              >
+              <div class="input-group mb-3">
+                <select
+                  #desc
+                  style="width: 50%"
+                  class="form-select"
+                  name="desc"
+                >
+                  <option
+                    *ngFor="let grupo of grupos.results"
+                    [ngValue]="grupo.descricao"
+                  >
+                    {{ grupo.descricao }}
+                  </option>
+                </select>
+                <div class="input-group-append">
+                  <button
+                    title="Adicionar novo grupo"
+                    class="btn btn-success mx-4"
+                    *ngIf="isAdmin === '1'"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    (click)="goToGroups()"
+                  >
+                    <i class="fa-solid fa-circle-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">CPF</label>
@@ -568,8 +603,13 @@
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Tipo</label>
-            <select class="form-control" name="tipo2" #tipo2 id="tipo"
-            (change)="logar(tipo2.value)">
+            <select
+              class="form-control"
+              name="tipo2"
+              #tipo2
+              id="tipo"
+              (change)="logar(tipo2.value)"
+            >
               <option value="1">Positivo</option>
               <option value="2">Negativo</option>
             </select>

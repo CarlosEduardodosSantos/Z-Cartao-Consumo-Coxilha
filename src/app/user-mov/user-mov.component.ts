@@ -30,6 +30,7 @@ export class UserMovComponent implements OnInit {
   index: any;
   grupos: any;
   frete: any;
+  dataagora = new Date().toISOString().substring(0, 10);
 
   constructor(
     private CartaoConsumoService: CartaoConsumoService,
@@ -318,5 +319,10 @@ export class UserMovComponent implements OnInit {
     else{
       return ""
     }
+  }
+
+  converterDate(data: any) {
+    let dataFormatada = new Date(data).toLocaleDateString()
+    return  dataFormatada;
   }
 }

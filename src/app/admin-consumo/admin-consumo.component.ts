@@ -38,7 +38,7 @@ export class AdminConsumoComponent implements OnInit {
   desc: any = '';
   frete: any = true;
   consumo2: any;
-
+  login: any = localStorage.getItem('login');
   isAdmin: any = localStorage.getItem('admin');
 
   makePdf() {
@@ -299,14 +299,13 @@ export class AdminConsumoComponent implements OnInit {
   }
 
   async obterConsulByNrOrName(consumId: any) {
+    if(consumId !== '' && consumId !== null){
     this.CartaoConsumoService.obterConsuByNrOrName(consumId, consumId).then(
       (consum) => {
         this.consumo = consum;
         console.log(consum);
         if (
-          this.consumo.results.length >= 1 &&
-          consumId !== '' &&
-          consumId !== null
+          this.consumo.results.length >= 1
         ) {
           this.CartaoConsumoService.obterConsuByNrOrName(
             this.consumId,
@@ -324,6 +323,10 @@ export class AdminConsumoComponent implements OnInit {
         }
       }
     );
+    }
+    else{
+      location.reload();
+    }
   }
   goToUser(consumId: any) {
     this.router.navigate(['/user/' + consumId]);

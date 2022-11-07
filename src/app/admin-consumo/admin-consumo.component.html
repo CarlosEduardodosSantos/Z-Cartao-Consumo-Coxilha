@@ -14,15 +14,9 @@
       />
       <span class="text-uppercase font-weight-bold mx-4">Cartão Consumo</span>
     </a>
+    
     <div class="d-flex">
-
-      <button
-        title="Pesquisar"
-        (click)="obterConsulByNrOrName(consumId)"
-        class="btn btn-warning mx-2"
-      >
-        <i class="fa-solid fa-magnifying-glass"></i>
-      </button>
+      
       <input
         type="text"
         style="width: 300px"
@@ -30,6 +24,13 @@
         name="search"
         (keyup)="consumId = $any($event.target).value; getTxtValue()"
       />
+      <button
+      title="Pesquisar"
+      (click)="obterConsulByNrOrName(consumId)"
+      class="btn btn-warning mx-2"
+    >
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
       <button
         title="Adicionar novo cartão"
         class="btn btn-dark mx-2"
@@ -39,14 +40,14 @@
         <i class="fa-solid fa-circle-plus"></i>
       </button>
       <button
-      title="Adicionar Movimentação"
-      class="btn btn-success mx-2"
-      *ngIf="isAdmin === '3' || isAdmin ==='1'"
-      data-bs-toggle="modal"
-      data-bs-target="#insertMovCN"
-    >
-    <i class="fa-solid fa-money-bill"></i>
-    </button>
+        title="Adicionar Movimentação"
+        class="btn btn-success mx-2"
+        *ngIf="isAdmin === '3' || isAdmin === '1'"
+        data-bs-toggle="modal"
+        data-bs-target="#insertMovCN"
+      >
+        <i class="fa-solid fa-money-bill"></i>
+      </button>
       <button
         title="Transferir Saldo"
         class="btn btn-warning mx-2"
@@ -56,7 +57,7 @@
         <i class="fa-solid fa-money-bill-transfer"></i>
       </button>
       <button
-      id="printPageButton"
+        id="printPageButton"
         title="Caixa"
         class="btn btn-secondary mx-2"
         (click)="goToCaixa()"
@@ -65,12 +66,12 @@
       </button>
 
       <button
-      id="printPageButton"
+        id="printPageButton"
         title="Auditoria"
         class="btn btn-info mx-2"
         (click)="goToAuditoria()"
       >
-      <i class="fa-solid fa-book"></i>
+        <i class="fa-solid fa-book"></i>
       </button>
       <button
         class="btn btn-dark mx-2"
@@ -80,11 +81,20 @@
       >
         <i class="fa-solid fa-circle-user"></i>
       </button>
+      <button
+      class="btn btn-primary mx-2"
+      title="Administrar Grupos"
+      *ngIf="isAdmin === '1'"
+      (click)="goToGroups()"
+    >
+    <i class="fa-solid fa-group-arrows-rotate"></i>
+    </button>
       <button title="Sair" class="btn btn-danger mx-2" (click)="Sair()">
         <i class="fa-solid fa-arrow-right-from-bracket"></i>
       </button>
     </div>
   </div>
+  <span class="text-uppercase font-weight-bold mx-4">Bem vindo(a) {{login}}</span>
 </nav>
 
 <table class="table mt-3">
@@ -95,7 +105,7 @@
       <th scope="col">Nome</th>
       <th scope="col">Grupo</th>
       <th scope="col">CPF</th>
-      <th scope="col">Descrição</th>
+      <th scope="col">Grupo</th>
       <th scope="col">Validade</th>
       <th scope="col">Desconto</th>
       <th scope="col">Saldo Atual</th>
@@ -125,7 +135,7 @@
         <button
           title="Adicionar Movimentação"
           class="btn btn-dark mx-2"
-          *ngIf="isAdmin === '3'|| isAdmin === '1'"
+          *ngIf="isAdmin === '3' || isAdmin === '1'"
           (click)="catchIndex(i); catchId(Id.innerText)"
           data-bs-toggle="modal"
           data-bs-target="#insertMovC"
@@ -821,7 +831,6 @@
               id="exampleInputPassword1"
             />
           </div>
-
         </form>
       </div>
       <div class="modal-footer">
@@ -830,9 +839,7 @@
         </button>
         <button
           type="button"
-          (click)="
-            impCre(nroImp1.value, nroImp2.value, saldoImp.value)
-          "
+          (click)="impCre(nroImp1.value, nroImp2.value, saldoImp.value)"
           class="btn btn-primary"
           data-bs-toggle="modal"
           data-bs-target="#gerarComprovante"
@@ -843,20 +850,3 @@
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-<footer id="printPageButton" class="bg-light text-center text-lg-start">
-  <div
-    id="printPageButton"
-    class="text-center p-3"
-    style="background-color: rgba(0, 0, 0, 0.2)"
-  >
-    © 2022 Powered by:
-    <a class="text-dark" href="https://www.zipsoftware.com.br/">ZiP Software</a>
-  </div>
-</footer>
