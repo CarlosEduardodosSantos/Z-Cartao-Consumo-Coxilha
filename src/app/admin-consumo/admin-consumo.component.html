@@ -70,6 +70,7 @@
         id="printPageButton"
         title="Auditoria"
         class="btn btn-info mx-2"
+        *ngIf="isAdmin === '1'"
         (click)="goToAuditoria()"
       >
         <i class="fa-solid fa-book"></i>

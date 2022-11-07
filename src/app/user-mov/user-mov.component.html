@@ -21,7 +21,7 @@
           id="printPageButton"
           title="Inserir Movimentação"
           class="btn btn-success mx-2"
-          *ngIf="isAdmin === '1' || isAdmin === '3'"
+          *ngIf="isAdmin === '1'"
           data-bs-toggle="modal"
           data-bs-target="#insertMovC"
         >
@@ -290,6 +290,7 @@
               #descontoEdit
               min="0"
               value="{{ consumo.desconto }}"
+              [disabled]="isAdmin !== '1'"
               class="form-control"
               id="exampleInputPassword1"
             />
@@ -611,7 +612,7 @@
               (change)="logar(tipo2.value)"
             >
               <option value="1">Positivo</option>
-              <option value="2">Negativo</option>
+              <option  [disabled]="isAdmin !== '1'" value="2">Negativo</option>
             </select>
           </div>
           <div [hidden]="tipo2.value == '2'" class="mb-3">
