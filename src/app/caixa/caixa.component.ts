@@ -19,11 +19,18 @@ export class CaixaComponent implements OnInit {
   totalCartao: any;
   totalImps: any;
   totalNeg: any;
+  login: any = localStorage.getItem('login');
+  isAdmin: any = localStorage.getItem('admin');
+  usuarios: any;
 
   async ngOnInit(){
-await this.CartaoConsumoService.obterTudoAbertoPorDia(this.dataagora).then((cx) => {
+await this.CartaoConsumoService.obterTudoAbertoPorDia(this.dataagora, this.login).then((cx) => {
   this.caixa = cx;
 });
+await this.CartaoConsumoService.obterUsuarios().then((users) => {
+  this.usuarios = users;
+});
+console.log(this.usuarios);
 console.log(this.dataagora);
 console.log(this.caixa);
   }
@@ -41,7 +48,7 @@ console.log(this.caixa);
   }
 
   async searchByDate(data: any) {
-    await this.CartaoConsumoService.obterTudoAbertoPorDia(data).then((cx) => {
+    await this.CartaoConsumoService.obterTudoAbertoPorDia(data, this.login).then((cx) => {
       this.caixa = cx;
     });
   }
@@ -114,10 +121,18 @@ console.log(this.caixa);
   }
 
   async fecharCaixa(data: any) {
-    if (confirm('Tem certeza que deseja fechar o caixa?')) {
+    if (confirm('Tem certeza que deseja fechar o caixa de '+this.login+'?')) {
      await this.CartaoConsumoService.fecharCaixa(this.dataagora, localStorage.getItem('login'), this.total)
     }
     location.reload();
+  }
+
+  async obterCaixa(login: any){
+    console.log(login);
+    this.login = login
+    await this.CartaoConsumoService.obterTudoAbertoPorDia(this.dataagora, this.login).then((cx) => {
+      this.caixa = cx;
+    });
   }
 
 }

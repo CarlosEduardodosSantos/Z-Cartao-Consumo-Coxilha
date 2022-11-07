@@ -245,9 +245,9 @@ export class CartaoConsumoService {
   }
   //caixa
 
-  public obterTudoAbertoPorDia(date: any) {
+  public obterTudoAbertoPorDia(date: any, login: any) {
     return this.HttpClient.get(
-      `${environment.apiurl}api/CartaoConsumo/obterCaixaAberto/${date}/${localStorage.getItem('login')}`
+      `${environment.apiurl}api/CartaoConsumo/obterCaixaAberto/${date}/${login}`
     ).toPromise().then((res)=>{return res});
   }
   fecharCaixa(date: any, login: any, valor: any) {

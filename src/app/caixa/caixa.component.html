@@ -51,6 +51,22 @@
       </button>
     </div>
   </div>
+  <span class="text-uppercase font-weight-bold mx-4"
+    >Exibindo caixa de {{ login }}</span
+  >
+  <select
+  id="printPageButton"
+    *ngIf="isAdmin === '1'"
+    #desc
+    style="width: 30%"
+    class="form-select mx-4"
+    name="desc"
+    (change)="obterCaixa(desc.value)"
+  >
+    <option *ngFor="let usuario of usuarios.results" [ngValue]="usuario.login">
+      {{ usuario.login }}
+    </option>
+  </select>
 </nav>
 
 <table class="table mt-3">
@@ -59,7 +75,6 @@
       <th scope="col">Data</th>
       <th scope="col">Número do Cartão</th>
       <th scope="col">Histórico</th>
-      <th scope="col">Usuário</th>
       <th scope="col">Método</th>
       <th scope="col">Valor</th>
     </tr>
@@ -69,12 +84,10 @@
       <td>{{ converterLongDate(cx.data) }}</td>
       <td>{{ cx.nro }}</td>
       <td>{{ cx.historico }}</td>
-      <td>{{ cx.login }}</td>
       <td>{{ converteMetodo(cx.metodo) }}</td>
       <td>{{ converterCurrency(cx.valor) }}</td>
     </tr>
     <tr class="table-secondary">
-      <td></td>
       <td></td>
       <td></td>
       <td></td>
@@ -85,12 +98,10 @@
       <td></td>
       <td></td>
       <td></td>
-      <td></td>
       <td><b>Total em Cartão:</b></td>
       <td>{{ sumValoresCartao() }}</td>
     </tr>
     <tr class="table-secondary">
-      <td></td>
       <td></td>
       <td></td>
       <td></td>
@@ -101,12 +112,10 @@
       <td></td>
       <td></td>
       <td></td>
-      <td></td>
       <td><b>Total em Mov Negativas:</b></td>
       <td>{{ sumValoresNeg() }}</td>
     </tr>
     <tr class="table-secondary">
-      <td></td>
       <td></td>
       <td></td>
       <td></td>
