@@ -126,7 +126,7 @@
       <td>
         <button
           title="Detalhes"
-          class="btn btn-warning"
+          class="btn btn-warning mx-2"
           *ngIf="isAdmin === '1' || isAdmin === '3'"
           (click)="obterConsulByNr(consum.numero)"
         >
@@ -144,7 +144,7 @@
         </button>
         <button
           title="Deletar Cartão"
-          class="btn btn-danger mx-3"
+          class="btn btn-danger mx-2"
           *ngIf="isAdmin === '1'"
           (click)="deleteById(consum.cartaoConsumoId)"
         >
@@ -199,7 +199,7 @@
               <div class="input-group-append">
                 <button
                   title="Adicionar novo grupo"
-                  class="btn btn-success mx-4"
+                  class="btn btn-success mx-2"
                   *ngIf="isAdmin === '1'"
                   data-bs-dismiss="modal"
                   aria-label="Close"
