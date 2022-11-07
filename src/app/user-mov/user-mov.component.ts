@@ -224,7 +224,7 @@ export class UserMovComponent implements OnInit {
           parseFloat(_saldo) * (parseFloat(this.consumo.desconto) / 100);
         let soma =
           parseFloat(this.consumo.saldoAtual) - parseFloat(_saldo) + desc;
-        if (soma > 0) {
+        if (soma >= 0) {
           this.consumoModel = {
             cartaoConsumoId: this.consumo.cartaoConsumoId,
             numero: this.consumo.numero,
