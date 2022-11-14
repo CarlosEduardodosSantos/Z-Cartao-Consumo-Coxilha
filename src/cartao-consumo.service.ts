@@ -62,7 +62,7 @@ export class CartaoConsumoService {
   }
   public deleteConsu(id: any) {
     return this.HttpClient.delete<iConsumo>(
-      `${environment.apiurl}api/CartaoConsumo/deletarConsu/${id}`
+      `${environment.apiurl}api/CartaoConsumo/deletarConsu/${id}/${localStorage.getItem('login')}`
     ).toPromise();
   }
 
@@ -114,7 +114,7 @@ export class CartaoConsumoService {
 
   public deleteMovById(id: any) {
     return this.HttpClient.delete<iMov>(
-      `${environment.apiurl}api/CartaoConsumo/deletarMov/${id}`
+      `${environment.apiurl}api/CartaoConsumo/deletarMov/${id}/${localStorage.getItem('login')}`
     ).toPromise();
   }
 

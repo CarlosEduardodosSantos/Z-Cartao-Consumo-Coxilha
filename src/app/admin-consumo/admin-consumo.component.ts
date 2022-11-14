@@ -461,4 +461,5 @@ export class AdminConsumoComponent implements OnInit {
     }
 
   }
+
 }

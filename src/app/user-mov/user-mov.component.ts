@@ -252,6 +252,7 @@ export class UserMovComponent implements OnInit {
   }
 
   async deleteMovById(id: any) {
+    if (confirm('Tem certeza que deseja estornar essa movimentação?'))
     this.CartaoConsumoService.deleteMovById(id).then(() => location.reload());
   }
 
