@@ -98,8 +98,9 @@
   </div>
   <span class="text-uppercase font-weight-bold mx-4">Bem vindo(a) {{login}}</span>
 </nav>
-
-<table class="table mt-3">
+<div class="table-responsive">
+<table class="table mt-3 table-hover" data-pagination="true" data-side-pagination="server" data-page-list="[10, 25, 50, 100, all]"
+data-show-footer="true">
   <thead>
     <tr>
       <th scope="col" style="display: none">cartaoConsumoId</th>
@@ -156,6 +157,8 @@
     </tr>
   </tbody>
 </table>
+</div>
+
 
 <div
   class="modal fade"

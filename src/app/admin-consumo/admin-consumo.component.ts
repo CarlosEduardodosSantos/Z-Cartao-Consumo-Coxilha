@@ -18,6 +18,8 @@ import jsPDF from 'jspdf';
 })
 export class AdminConsumoComponent implements OnInit {
   @ViewChild('imp', { static: false }) el!: ElementRef;
+  page = 1;
+	pageSize = 4;
   title = 'CartaoConsumoAngular';
   total: any;
   totalzao: any;
@@ -40,6 +42,7 @@ export class AdminConsumoComponent implements OnInit {
   consumo2: any;
   login: any = localStorage.getItem('login');
   isAdmin: any = localStorage.getItem('admin');
+  collectionSize = this.consumo.length;
 
   makePdf() {
     let pdf = new jsPDF('p', 'pt', 'a4');
@@ -128,7 +131,7 @@ export class AdminConsumoComponent implements OnInit {
       registradoPor: localStorage.getItem('login'),
       frete: this.frete,
     };
-    if (_numero.value !== '' && _desc !== '' && _validade !== '') {
+    if (_numero.value !== ''&& _nome.value !=='') {
       let consumo: any;
       await this.CartaoConsumoService.obterConsuByNr(_numero.value).then(
         (consum) => {
@@ -221,6 +224,7 @@ export class AdminConsumoComponent implements OnInit {
     await this.CartaoConsumoService.obterConsuByRes().then((consum) => {
       this.consumo = consum;
     });
+    console.log(this.consumo);
     this.consumo.results.validade.forEach(
       this.converterShortDate(this.consumo.results.validade)
     );
@@ -461,5 +465,6 @@ export class AdminConsumoComponent implements OnInit {
     }
 
   }
+
 
 }
