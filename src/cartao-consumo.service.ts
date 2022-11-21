@@ -252,7 +252,7 @@ export class CartaoConsumoService {
   }
   fecharCaixa(date: any, login: any, valor: any) {
     return this.HttpClient
-      .put(`${environment.apiurl}api/CartaoConsumo/fecharCaixa/${date}/${login}/${valor}`, null)
+      .put(`${environment.apiurl}api/CartaoConsumo/fecharCaixa/${date}/${login}/${valor}/${environment.resId}`, null)
       .toPromise()
       .then((res) => {
         return res;
