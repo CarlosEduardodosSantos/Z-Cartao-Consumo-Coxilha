@@ -14,6 +14,7 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { GruposComponent } from './grupos/grupos.component';
 import { CaixaComponent } from './caixa/caixa.component';
 import { AuditoriaComponent } from './auditoria/auditoria.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { AuditoriaComponent } from './auditoria/auditoria.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
   providers: [UserLoginComponent],
   bootstrap: [AppComponent]

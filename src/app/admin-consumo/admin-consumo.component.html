@@ -121,7 +121,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let consum of consumo.results; let i = index">
+      <tr *ngFor="let consum of listConsum | slice: (page-1) * pageSize : page * pageSize; let i = index">
         <td style="display: none" #Id>{{ consum.cartaoConsumoId }}</td>
         <td>{{ consum.numero }}</td>
         <td>{{ consum.nome }}</td>
@@ -163,6 +163,10 @@
       </tr>
     </tbody>
   </table>
+  <ngb-pagination class="d-flex justify-content-center"
+  [(page)]="page"
+  [pageSize]="pageSize"
+  [collectionSize]="consumo.results.length"></ngb-pagination>
 </div>
 
 <div

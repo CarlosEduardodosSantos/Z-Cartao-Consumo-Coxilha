@@ -19,7 +19,7 @@ import jsPDF from 'jspdf';
 export class AdminConsumoComponent implements OnInit {
   @ViewChild('imp', { static: false }) el!: ElementRef;
   page = 1;
-	pageSize = 4;
+	pageSize = 100;
   title = 'CartaoConsumoAngular';
   total: any;
   totalzao: any;
@@ -40,6 +40,7 @@ export class AdminConsumoComponent implements OnInit {
   desc: any = '';
   frete: any = true;
   consumo2: any;
+  listConsum: any[] =[];
   login: any = localStorage.getItem('login');
   isAdmin: any = localStorage.getItem('admin');
   collectionSize = this.consumo.length;
@@ -223,6 +224,7 @@ export class AdminConsumoComponent implements OnInit {
     });
     await this.CartaoConsumoService.obterConsuByRes().then((consum) => {
       this.consumo = consum;
+      this.listConsum = this.consumo.results;
     });
     console.log(this.consumo);
     this.consumo.results.validade.forEach(
@@ -236,11 +238,13 @@ export class AdminConsumoComponent implements OnInit {
     if (id != null && id != '') {
       this.CartaoConsumoService.obterConsuById(this.consumId).then((consum) => {
         this.consumo = consum;
+        this.listConsum = this.consumo.results;
         console.log(consum);
       });
     } else {
       this.CartaoConsumoService.obterConsuByRes().then((consum) => {
         this.consumo = consum;
+        this.listConsum = this.consumo.results;
         console.log(consum);
       });
     }
@@ -268,6 +272,7 @@ export class AdminConsumoComponent implements OnInit {
   async obterConsulByNrList(consumId: any) {
     this.CartaoConsumoService.obterConsuByNr(consumId).then((consum) => {
       this.consumo = consum;
+      this.listConsum = this.consumo.results;
       console.log(consum);
       if (
         this.consumo.results.length >= 1 &&
@@ -277,12 +282,14 @@ export class AdminConsumoComponent implements OnInit {
         this.CartaoConsumoService.obterConsuByNr(this.consumId).then(
           (consum) => {
             this.consumo = consum;
+            this.listConsum = this.consumo.results;
             console.log(consum);
           }
         );
       } else {
         this.CartaoConsumoService.obterConsuByRes().then((consum) => {
           this.consumo = consum;
+          this.listConsum = this.consumo.results;
           console.log(consum);
         });
         window.alert('Cartão consumo não encontrado!');
@@ -293,6 +300,7 @@ export class AdminConsumoComponent implements OnInit {
   async obterConsulByNr(consumId: any) {
     this.CartaoConsumoService.obterConsuByNr(consumId).then((consum) => {
       this.consumo = consum;
+      this.listConsum = this.consumo.results;
       console.log(consum);
       if (this.consumo !== null) {
         this.goToUser(consumId);
@@ -307,6 +315,7 @@ export class AdminConsumoComponent implements OnInit {
     this.CartaoConsumoService.obterConsuByNrOrName(consumId, consumId).then(
       (consum) => {
         this.consumo = consum;
+        this.listConsum = this.consumo.results;
         console.log(consum);
         if (
           this.consumo.results.length >= 1
@@ -316,11 +325,13 @@ export class AdminConsumoComponent implements OnInit {
             this.consumId
           ).then((consum) => {
             this.consumo = consum;
+            this.listConsum = this.consumo.results;
             console.log(consum);
           });
         } else {
           this.CartaoConsumoService.obterConsuByRes().then((consum) => {
             this.consumo = consum;
+            this.listConsum = this.consumo.results;
             console.log(consum);
           });
           window.alert('Cartão consumo não encontrado!');
@@ -344,6 +355,7 @@ export class AdminConsumoComponent implements OnInit {
   async getTxtInfoMov(_saldo: any, _tipoMov: any, _metodo: any) {
     await this.CartaoConsumoService.obterConsuById(this.Id).then((consum) => {
       this.consumo = consum;
+      this.listConsum = this.consumo.results;
     });
     this.mov = {
       numeroCartao: this.consumo.numero,
@@ -372,6 +384,7 @@ export class AdminConsumoComponent implements OnInit {
     await this.CartaoConsumoService.obterConsuByNr(this.consumId).then(
       (consum) => {
         this.consumo = consum;
+        this.listConsum = this.consumo.results;
       }
     );
     if (
@@ -419,6 +432,7 @@ export class AdminConsumoComponent implements OnInit {
     await this.CartaoConsumoService.obterConsuByNr(id1).then(
       (consum) => {
         this.consumo = consum;
+        this.listConsum = this.consumo.results;
       }
     );
     await this.CartaoConsumoService.obterConsuByNr(id2).then(
