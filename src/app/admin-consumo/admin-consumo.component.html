@@ -7,18 +7,17 @@
     <a style="padding: 25px" href="#" class="navbar-brand">
       <img
         src="/assets/logo.png"
-        width="80"
+        width="150"
         height="100"
         alt=""
         class="d-inline-block align-middle mr-2"
       />
       <span class="text-uppercase font-weight-bold mx-4">Cartão Consumo</span>
     </a>
-    
+
     <div class="d-flex">
-      
       <input
-      placeholder="Pesquise o cartão aqui..."
+        placeholder="Pesquise o cartão aqui..."
         type="text"
         style="width: 300px"
         (keyup.enter)="obterConsulByNrOrName(consumId)"
@@ -26,12 +25,12 @@
         (keyup)="consumId = $any($event.target).value; getTxtValue()"
       />
       <button
-      title="Pesquisar"
-      (click)="obterConsulByNrOrName(consumId)"
-      class="btn btn-warning mx-2"
-    >
-      <i class="fa-solid fa-magnifying-glass"></i>
-    </button>
+        title="Pesquisar"
+        (click)="obterConsulByNrOrName(consumId)"
+        class="btn btn-warning mx-2"
+      >
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
       <button
         title="Adicionar novo cartão"
         class="btn btn-dark mx-2"
@@ -84,81 +83,87 @@
         <i class="fa-solid fa-circle-user"></i>
       </button>
       <button
-      class="btn btn-primary mx-2"
-      title="Administrar Grupos"
-      *ngIf="isAdmin === '1'"
-      (click)="goToGroups()"
-    >
-    <i class="fa-solid fa-people-group"></i>
-    </button>
+        class="btn btn-primary mx-2"
+        title="Administrar Grupos"
+        *ngIf="isAdmin === '1'"
+        (click)="goToGroups()"
+      >
+        <i class="fa-solid fa-people-group"></i>
+      </button>
       <button title="Sair" class="btn btn-danger mx-2" (click)="Sair()">
         <i class="fa-solid fa-arrow-right-from-bracket"></i>
       </button>
     </div>
   </div>
-  <span class="text-uppercase font-weight-bold mx-4">Bem vindo(a) {{login}}</span>
+  <span class="text-uppercase font-weight-bold mx-4"
+    >Bem vindo(a) {{ login }}</span
+  >
 </nav>
 <div class="table-responsive">
-<table class="table mt-3 table-hover" data-pagination="true" data-side-pagination="server" data-page-list="[10, 25, 50, 100, all]"
-data-show-footer="true">
-  <thead>
-    <tr>
-      <th scope="col" style="display: none">cartaoConsumoId</th>
-      <th scope="col">Número</th>
-      <th scope="col">Nome</th>
-      <th scope="col">Grupo</th>
-      <th scope="col">CPF</th>
-      <th scope="col">Grupo</th>
-      <th scope="col">Validade</th>
-      <th scope="col">Desconto</th>
-      <th scope="col">Saldo Atual</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let consum of consumo.results; let i = index">
-      <td style="display: none" #Id>{{ consum.cartaoConsumoId }}</td>
-      <td>{{ consum.numero }}</td>
-      <td>{{ consum.nome }}</td>
-      <td>{{ consum.grupo }}</td>
-      <td>{{ consum.cpf }}</td>
-      <td>{{ consum.descricao }}</td>
-      <td>{{ consum.validade }}</td>
-      <td>{{ consum.desconto }}%</td>
-      <td>{{ converterCurrency(consum.saldoAtual) }}</td>
+  <table
+    class="table mt-3 table-hover"
+    data-pagination="true"
+    data-side-pagination="server"
+    data-page-list="[10, 25, 50, 100, all]"
+    data-show-footer="true"
+  >
+    <thead>
+      <tr>
+        <th scope="col" style="display: none">cartaoConsumoId</th>
+        <th scope="col">Número</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Grupo</th>
+        <th scope="col">CPF</th>
+        <th scope="col">Grupo</th>
+        <th scope="col">Validade</th>
+        <th scope="col">Desconto</th>
+        <th scope="col">Saldo Atual</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let consum of consumo.results; let i = index">
+        <td style="display: none" #Id>{{ consum.cartaoConsumoId }}</td>
+        <td>{{ consum.numero }}</td>
+        <td>{{ consum.nome }}</td>
+        <td>{{ consum.grupo }}</td>
+        <td>{{ consum.cpf }}</td>
+        <td>{{ consum.descricao }}</td>
+        <td>{{ consum.validade }}</td>
+        <td>{{ consum.desconto }}%</td>
+        <td>{{ converterCurrency(consum.saldoAtual) }}</td>
 
-      <td>
-        <button
-          title="Detalhes"
-          class="btn btn-warning mx-2"
-          *ngIf="isAdmin === '1' || isAdmin === '3'"
-          (click)="obterConsulByNr(consum.numero)"
-        >
-          <i class="fa-solid fa-circle-info"></i>
-        </button>
-        <button
-          title="Adicionar Movimentação"
-          class="btn btn-dark mx-2"
-          *ngIf="isAdmin === '3' || isAdmin === '1'"
-          (click)="catchIndex(i); catchId(Id.innerText)"
-          data-bs-toggle="modal"
-          data-bs-target="#insertMovC"
-        >
-          <i class="fa-solid fa-circle-plus"></i>
-        </button>
-        <button
-          title="Deletar Cartão"
-          class="btn btn-danger mx-2"
-          *ngIf="isAdmin === '1'"
-          (click)="deleteById(consum.cartaoConsumoId)"
-        >
-          <i class="fa-solid fa-trash-can"></i>
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+        <td>
+          <button
+            title="Detalhes"
+            class="btn btn-warning mx-2"
+            *ngIf="isAdmin === '1' || isAdmin === '3'"
+            (click)="obterConsulByNr(consum.numero)"
+          >
+            <i class="fa-solid fa-circle-info"></i>
+          </button>
+          <button
+            title="Adicionar Movimentação"
+            class="btn btn-dark mx-2"
+            *ngIf="isAdmin === '3' || isAdmin === '1'"
+            (click)="catchIndex(i); catchId(Id.innerText)"
+            data-bs-toggle="modal"
+            data-bs-target="#insertMovC"
+          >
+            <i class="fa-solid fa-circle-plus"></i>
+          </button>
+          <button
+            title="Deletar Cartão"
+            class="btn btn-danger mx-2"
+            *ngIf="isAdmin === '1'"
+            (click)="deleteById(consum.cartaoConsumoId)"
+          >
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-
 
 <div
   class="modal fade"
